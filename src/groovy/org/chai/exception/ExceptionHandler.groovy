@@ -15,7 +15,7 @@ package org.chai.exception
  *     * Neither the name of the Clinton Health Access Initiative nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -28,33 +28,31 @@ package org.chai.exception
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import grails.util.GrailsUtil
+
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 import org.codehaus.groovy.grails.web.errors.GrailsExceptionResolver
-
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.servlet.ModelAndView
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import grails.util.GrailsUtil
 
 class ExceptionHandler extends GrailsExceptionResolver {
 
-	private static final Log log = LogFactory.getLog(ExceptionHandler.class);
+	private static final Logger log = LoggerFactory.getLogger(ExceptionHandler)
 
 	def mailService
 	def grailsApplication
-	
-	ModelAndView resolveException(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception exception) {
-		if (log.debugEnabled) log.debug("resolveException(request=${arg0}, response=${arg1}, handler=${arg2}, exception=${exception})")
-		
+
+	ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) {
+		if (log.debugEnabled) log.debug("resolveException(request=${request}, response=${response}, handler=${handler}, exception=${exception})")
+
 		def adminEmail = grailsApplication.config.mailOnException.email.to
 		def fromEmail = grailsApplication.config.mailOnException.email.from
 		def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.RenderTagLib')
 		g.metaClass.prettyPrintStatus = { return '' }
-		
+
 		try {
 			mailService.sendMail {
 				multipart true
@@ -66,8 +64,7 @@ class ExceptionHandler extends GrailsExceptionResolver {
 		} catch (Exception e) {
 			if (log.errorEnabled) log.error("could not send email after exception", e)
 		}
-		
-		return super.resolveException(arg0, arg1, arg2, exception)
+
+		return super.resolveException(request, response, handler, exception)
 	}
-	
 }
