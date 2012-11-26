@@ -26,7 +26,8 @@ There are 3 variables that need to be configured :
 	// Tells the plugin who the sender of the email is
 	mailOnException.email.from = "from@example.com"
 	
-	// Tells the plugin what the default error view is, so the default behaviour is conserved
+	// Tells the plugin what the default error view is, so the default behaviour is conserved,
+	// The content of UrlMappings.groovy for "500" is ignored
 	mailOnException.error.view = "/error"
 
 You should also configure the mail plugin. Check the documentation [here][mail].
