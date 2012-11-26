@@ -2,7 +2,7 @@ import org.chai.exception.ExceptionHandler
 
 class MailOnExceptionGrailsPlugin {
 	def version = "0.1"
-	def grailsVersion = "2.1 > *"
+	def grailsVersion = "2.0 > *"
 	def title = "Mail On Exception Plugin"
 	def author = "François Terrier"
 	def authorEmail = "fterrier@gmail.com"
