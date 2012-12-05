@@ -3,7 +3,7 @@ Mail on Exception plugin
 
 Grails plugin that sends a message to a configured email address when a frontend exception occurs that triggers a HTTP 500 response.
 
-This way you will each time a user-visible exception occurs on your website.
+This way you will be notified each time a user-visible exception occurs on your website.
 
 This plugin uses the [mail][mail] plugin to send emails.
 
