@@ -20,8 +20,8 @@ Configuration
 
 There are 4 variables that need to be configured :
 	
-  // Tells the plugin whether to skip e-mail sending (common case in development environment)
-  mailOnException.enabled = true/false // enabled by default
+	// Tells the plugin whether to skip e-mail sending (common case in development environment)
+	mailOnException.enabled = true // or false, enabled by default
 
 	// Tells the plugin where the mail should be sent
 	mailOnException.email.to = "to@example.com"
