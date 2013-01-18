@@ -46,25 +46,29 @@ class ExceptionHandler extends GrailsExceptionResolver {
 	def grailsApplication
 
 	ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) {
-		if (log.debugEnabled) log.debug("resolveException(request=${request}, response=${response}, handler=${handler}, exception=${exception})")
-
-		def adminEmail = grailsApplication.config.mailOnException.email.to
-		def fromEmail = grailsApplication.config.mailOnException.email.from
-		def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.RenderTagLib')
-		g.metaClass.prettyPrintStatus = { return '' }
-
-		try {
-			mailService.sendMail {
-				multipart true
-				to adminEmail
-				from fromEmail
-				subject "Unhandled exception in the ${GrailsUtil.environment} environment"
-				html g.renderException(exception: exception)
+		
+		if(grailsApplication.config.mailOnException.enabled)
+		{
+			if (log.debugEnabled) log.debug("resolveException(request=${request}, response=${response}, handler=${handler}, exception=${exception})")
+	
+			def adminEmail = grailsApplication.config.mailOnException.email.to
+			def fromEmail = grailsApplication.config.mailOnException.email.from
+			def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.RenderTagLib')
+			g.metaClass.prettyPrintStatus = { return '' }
+	
+			try {
+				mailService.sendMail {
+					multipart true
+					to adminEmail
+					from fromEmail
+					subject "Unhandled exception in the ${GrailsUtil.environment} environment"
+					html g.renderException(exception: exception)
+				}
+			} catch (Exception e) {
+				if (log.errorEnabled) log.error("could not send email after exception", e)
 			}
-		} catch (Exception e) {
-			if (log.errorEnabled) log.error("could not send email after exception", e)
 		}
-
+		
 		return super.resolveException(request, response, handler, exception)
 	}
 }
