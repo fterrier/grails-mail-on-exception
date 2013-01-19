@@ -1,7 +1,7 @@
 import org.chai.exception.ExceptionHandler
 
 class MailOnExceptionGrailsPlugin {
-	def version = "0.1"
+	def version = "0.1.1"
 	def grailsVersion = "2.0 > *"
 	def title = "Mail On Exception Plugin"
 	def author = "François Terrier"
@@ -13,6 +13,7 @@ class MailOnExceptionGrailsPlugin {
 	def organization = [ name: "Clinton Health Access Initiative", url: "http://www.clintonhealthaccess.org/" ]
 	def issueManagement = [system: 'Github', url: 'https://github.com/fterrier/grails-mail-on-exception/issues']
 	def scm = [url: "http://github.com/fterrier/grails-mail-on-exception"]
+	def developers = []
 
 	def loadAfter = ['services']
 

@@ -35,4 +35,12 @@ There are 4 variables that need to be configured :
 
 You should also configure the mail plugin. Check the documentation [here][mail].
 
+Revision Log
+---
+
+- Version 0.1
+	- Initial version
+- Version 0.1.1
+	- Added mailOnException.enabled config parameter
+
 [mail]: http://grails.org/plugin/mail
